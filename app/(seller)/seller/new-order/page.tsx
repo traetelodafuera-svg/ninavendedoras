@@ -20,7 +20,10 @@ export default function NewOrderPage() {
         />
         <button type="submit">Enviar pedido</button>
       </form>
-      <p>Formato JSON: [\{"codigo":"P1","descripcion":"Labial","cantidad":1,"precio_catalogo_cop":10000\}]</p>
+      <p>
+        Formato JSON:{' '}
+        <code>[{"codigo":"P1","descripcion":"Labial","cantidad":1,"precio_catalogo_cop":10000}]</code>
+      </p>
     </div>
   );
 }
