@@ -1,4 +1,3 @@
-import React from 'react';
 import { NextResponse } from 'next/server';
 import { renderToBuffer } from '@react-pdf/renderer';
 import { InvoicePdf } from '@/lib/invoice-pdf';
@@ -29,17 +28,17 @@ export async function GET(_req: Request, { params }: { params: { invoiceId: stri
 
   if (error || !invoice) return NextResponse.json({ error: error?.message ?? 'Invoice not found' }, { status: 404 });
 
-  const buffer = await renderToBuffer(
-    React.createElement(InvoicePdf, {
-      invoiceNumber: invoice.invoice_number,
-      sellerName: (invoice.profiles as { nombre?: string })?.nombre ?? 'Vendedora',
-      total: Number(invoice.total_cop),
-      paid: Number(invoice.paid_cop),
-      balance: Number(invoice.balance_cop)
-    })
-  );
+  const pdfDocument = InvoicePdf({
+    invoiceNumber: invoice.invoice_number,
+    sellerName: (invoice.profiles as { nombre?: string })?.nombre ?? 'Vendedora',
+    total: Number(invoice.total_cop),
+    paid: Number(invoice.paid_cop),
+    balance: Number(invoice.balance_cop)
+  });
 
-  return new NextResponse(buffer, {
+  const buffer = await renderToBuffer(pdfDocument);
+
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       'Content-Type': 'application/pdf',
       'Content-Disposition': `inline; filename="${invoice.invoice_number}.pdf"`
