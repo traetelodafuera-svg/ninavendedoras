@@ -5,6 +5,7 @@ import { createOrderAction } from '@/lib/actions/core';
 
 export default function NewOrderPage() {
   const [items, setItems] = useState([{ codigo: '', descripcion: '', cantidad: 1, precio_catalogo_cop: 0 }]);
+  const exampleItemsJson = '[{"codigo":"P1","descripcion":"Labial","cantidad":1,"precio_catalogo_cop":10000}]';
 
   return (
     <div className="card">
@@ -22,7 +23,7 @@ export default function NewOrderPage() {
       </form>
       <p>
         Formato JSON:{' '}
-        <code>[{"codigo":"P1","descripcion":"Labial","cantidad":1,"precio_catalogo_cop":10000}]</code>
+        <code>{exampleItemsJson}</code>
       </p>
     </div>
   );
